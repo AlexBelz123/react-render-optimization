@@ -2,7 +2,7 @@ import { memo, useMemo } from 'react';
 import { randomColor } from './List';
 
 const ListItem = ({ item: { id, value }, checked, onCheck }) => {
-  const background = useMemo(() => `#${randomColor()}`, [checked]);
+  const background = `#${randomColor()}`;
 
   const handleChange = ({ target: { checked } }) => onCheck(checked, id);
 
