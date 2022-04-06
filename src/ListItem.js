@@ -1,19 +1,15 @@
-import { memo, useEffect, useRef } from 'react';
+import { memo, useMemo } from 'react';
 import { randomColor } from './List';
 
 const ListItem = ({ item: { id, value }, checked, onCheck }) => {
-  const background = useRef(`#${randomColor()}`); // to prevent unnecessary rerenders (updating the ref dont causes component rerender)
-
-  useEffect(() => {
-    background.current = `#${randomColor()}`;
-  }, [checked]);
+  const background = useMemo(() => `#${randomColor()}`, [checked]);
 
   const handleChange = ({ target: { checked } }) => onCheck(checked, id);
 
-  console.log('render'); // I didnt remove this console log, so you can see everything is working properly
+  console.log('render');
 
   return (
-    <div style={{ userSelect: 'none', background: background.current }}>
+    <div style={{ userSelect: 'none', background }}>
       <input
         id={id}
         type="checkbox"
@@ -21,7 +17,7 @@ const ListItem = ({ item: { id, value }, checked, onCheck }) => {
         onChange={handleChange}
       />
       <label htmlFor={id}>
-        {value}; renderID: {background.current}
+        {value}; renderID: {background}
       </label>
     </div>
   );
